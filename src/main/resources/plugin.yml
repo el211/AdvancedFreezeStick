@@ -1,0 +1,17 @@
+name: AdvancedFreezeStick
+version: 1.0
+main: com.afelia.advancedfreezestick.AdvancedFreezeStick
+author: Elias
+description: A Minecraft plugin that provides a freezing stick.
+api-version: '1.20'
+
+commands:
+  givefreezestick:
+    description: Gives the player a freezing stick.
+    usage: /givefreezestick
+    permission: freezestick.give
+
+  giveplayerfreezestick:
+    description: Gives a player a freezing stick.
+    usage: /giveplayerfreezestick <player>
+    permission: freezestick.giveplayer
