@@ -6,15 +6,15 @@ import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.GameMode;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -135,14 +135,18 @@ public class AdvancedFreezeStick extends JavaPlugin implements Listener {
                 }
 
                 Entity target = event.getRightClicked();
-                if (target != null) {
+                if (target != null && (target instanceof LivingEntity || target.getType() == EntityType.ARMOR_STAND)) {
+                    // Check if the interaction is with a living entity or an armor stand
+                    // Ignore item frames and glow item frames
+                    if (target.getType() == EntityType.ITEM_FRAME || target.getType() == EntityType.GLOW_ITEM_FRAME) {
+                        return;
+                    }
+
                     // Check if there are remaining uses left
                     if (getRemainingUses(player) <= 0) {
                         player.sendMessage(ChatColor.RED + "You have used all the remaining uses of the Freezing Stick!");
                         return;
                     }
-                    git push -u origin master
-
                     // If there are remaining uses, freeze the entity
                     freezeEntity(target);
                     updateRemainingUses(player);
